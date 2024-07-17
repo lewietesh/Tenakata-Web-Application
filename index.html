@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tenakata Admission System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="colorlib.com">
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.css">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="">
+
+        </div>
+
+    </header>
+    <div id="alertContainer"></div>
+
+    <div class="wrapper">
+        <div class="image-holder ">
+            <p>Welcome to Tenakata University</p>
+        </div>
+        <form id="admissionForm" action="">
+            <div id="wizard">
+                <!-- SECTION 1 -->
+                <h4></h4>
+                <section>
+                    <div class="form-row form-group">
+                        <div class="form-holder">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-holder">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="email">Email *</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="gender">Gender *</label>
+                        <div class="form-holder">
+                            <select name="gender" id="gender" class="form-control" required>
+                                <option value="male" class="option">Male</option>
+                                <option value="female" class="option">Female</option>
+                            </select>
+                            <i class="zmdi zmdi-caret-down"></i>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="age">Age *</label>
+                        <input type="number" class="form-control" id="age" name="age" required>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="form-holder">
+                            <label for="password">Password *</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="form-holder">
+                            <label for="confirmPassword">Confirm Password *</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <input type="checkbox" id="agree" name="agree" required> I agree to the terms and conditions
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <!-- <button type="button" class="btn btn-primary" id="nextStep1">Next</button> -->
+                </section>
+
+                <!-- SECTION 2 -->
+                <h4></h4>
+                <section>
+                    <div class="form-row">
+                        <label for="otp">Enter OTP Code *</label>
+                        <input type="text" class="form-control" id="otp" name="otp" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="nextStep2">Submit</button>
+                </section>
+
+                <!-- SECTION 3 -->
+                <h4></h4>
+                <section>
+                    <div class="form-row">
+                        <label for="maritalStatus">Marital Status *</label>
+                        <div class="form-holder">
+                            <select name="maritalStatus" id="maritalStatus" class="form-control" required>
+                                <option value="single" class="option">Single</option>
+                                <option value="married" class="option">Married</option>
+                            </select>
+                            <i class="zmdi zmdi-caret-down"></i>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="height">Height (cm) *</label>
+                        <input type="number" class="form-control" id="height" name="height" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="country">Country *</label>
+                        <input type="text" class="form-control" id="country" name="country" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="iq">IQ Test Result *</label>
+                        <input type="number" class="form-control" id="iq" name="iq" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="photo">Photo *</label>
+                        <input type="file" class="form-control-file" id="photo" name="photo" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="gpsLocation">GPS Location *</label>
+                        <input type="text" class="form-control" id="gpsLocation" name="gpsLocation" readonly required>
+                        <button type="button" class="btn btn-secondary" id="fetchLocation">Fetch Location</button>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="nextStep3">Submit</button>
+                </section>
+
+                <!-- SECTION 4 -->
+                <h4></h4>
+                <section>
+                    <h2>Profile Score Card</h2>
+                    <div id="scoreCard"></div>
+                    <a id="downloadPdf" href="#" class="btn btn-primary">Download PDF</a>
+                </section>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- JQUERY STEP -->
+    <script src="js/jquery.steps.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Validate password and confirm password fields
+            $('#confirmPassword').on('mouseleave', function () {
+                validatePassword();
+            });
+
+            // Validate email field
+            $('#email').on('blur', function () {
+                validateEmail();
+            });
+
+            function validatePassword() {
+                const password = $('#password').val();
+                const confirmPassword = $('#confirmPassword').val();
+
+                if (password !== confirmPassword) {
+                    showAlert('Passwords do not match.', 'error');
+                    $('#confirmPassword').val('');
+                    $('#confirmPassword').focus();
+                    return false;
+                }
+                return true;
+            }
+
+            function validateEmail() {
+                const email = $('#email').val();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailRegex.test(email)) {
+                    showAlert('Please enter a valid email address.', 'error');
+                    $('#email').focus();
+                    return false;
+                }
+                return true;
+            }
+
+            function showAlert(message, type) {
+                Swal.fire({
+                    icon: type,
+                    title: message,
+                    toast: true,
+                    position: 'center',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>
