@@ -37,7 +37,7 @@ if ($conn->query($sql) === TRUE) {
     echo json_encode(['success' => false, 'message' => 'Error: ' . $sql . '<br>' . $conn->error]);
 }
 
-$conn->close();
+
 
 // Function to handle photo upload
 function uploadPhoto($photo) {

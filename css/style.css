@@ -212,15 +212,15 @@ header .logo {
 }
 
 .steps ul.step-2:before {
-  content: "Additional Information";
+  content: "Verify Email";
 }
 
 .steps ul.step-3:before {
-  content: "Your Order";
+  content: "Additional Information";
 }
 
 .steps ul.step-4:before {
-  content: "Billing Method";
+  content: "Admissability Prediction";
 }
 
 h3 {

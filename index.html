@@ -12,8 +12,7 @@
 
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </head>
 
@@ -31,7 +30,7 @@
         <div class="image-holder ">
             <p>Welcome to Tenakata University</p>
         </div>
-        <form id="admissionForm" action="">
+        <form id="admissionForm" enctype="multipart/form-data">
             <div id="wizard">
                 <!-- SECTION 1 -->
                 <h4></h4>
@@ -91,7 +90,7 @@
                         <label for="otp">Enter OTP Code *</label>
                         <input type="text" class="form-control" id="otp" name="otp" required>
                     </div>
-                    <button type="button" class="btn btn-primary" id="nextStep2">Submit</button>
+                    <!-- <button type="button" class="btn btn-primary" id="nextStep2">Submit</button> -->
                 </section>
 
                 <!-- SECTION 3 -->
@@ -123,12 +122,7 @@
                         <label for="photo">Photo *</label>
                         <input type="file" class="form-control-file" id="photo" name="photo" required>
                     </div>
-                    <div class="form-row">
-                        <label for="gpsLocation">GPS Location *</label>
-                        <input type="text" class="form-control" id="gpsLocation" name="gpsLocation" readonly required>
-                        <button type="button" class="btn btn-secondary" id="fetchLocation">Fetch Location</button>
-                    </div>
-                    <button type="button" class="btn btn-primary" id="nextStep3">Submit</button>
+
                 </section>
 
                 <!-- SECTION 4 -->
@@ -138,25 +132,38 @@
                     <div id="scoreCard"></div>
                     <a id="downloadPdf" href="#" class="btn btn-primary">Download PDF</a>
                 </section>
+
+   
             </div>
         </form>
+
+
     </div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <!-- JQUERY STEP -->
-    <script src="js/jquery.steps.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Validate password and confirm password fields
-            $('#confirmPassword').on('mouseleave', function () {
-                validatePassword();
-            });
+    <script
+   src="https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCB8B-k7dIkyWZmEgsd7H6uYIRDW_sz10E&loading=async&callback=initMap">
+     </script>
 
-            // Validate email field
-            $('#email').on('blur', function () {
-                validateEmail();
-            });
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/jquery.steps.js"></script>
+        <script src="js/main.js"></script>
+    
+
+    <script>
+
+        $(document).ready(function () {
+
+                // Validate password and confirm password fields
+                $('#confirmPassword').on('mouseleave', function () {
+                    validatePassword();
+                });
+
+                // Validate email field
+                $('#email').on('blur', function () {
+                    validateEmail();
+                });
+
 
             function validatePassword() {
                 const password = $('#password').val();
@@ -202,6 +209,15 @@
         });
 
     </script>
+
+
+            <!-- JQUERY STEP -->
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
 </body>
 
 </html>

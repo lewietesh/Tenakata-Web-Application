@@ -1,0 +1,7 @@
+{
+    "require": {
+        "google/cloud-storage": "^1.39",
+        "guzzlehttp/guzzle": "^7.8",
+        "google/auth": "^1.37"
+    }
+}
