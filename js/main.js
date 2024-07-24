@@ -113,11 +113,39 @@ function showAlert(message, type) {
 }
 
 
+// output results
+function renderScoreCard(data) {
+    const scoreCardHtml = `
+        <div class='container'>
+            <div class='header'>
+                <img src='Resource/${data.photoUrl}' alt='Photo' style='width: 100px;'>
+                <h1>Tenakata University Admission Scorecard</h1>
+            </div>
+            <div class='details'>
+                <h3>Candidate Details</h3>
+                <p><strong>First Name:</strong> ${data.firstName}</p>
+                <p><strong>Last Name:</strong> ${data.lastName}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Gender:</strong> ${data.gender}</p>
+                <p><strong>Age:</strong> ${data.age}</p>
+                <p><strong>Marital Status:</strong> ${data.maritalStatus}</p>
+                <p><strong>GPS Location:</strong> ${data.gpsLocation}</p>
+                <p><strong>Country:</strong> ${data.country}</p>
+                <p><strong>IQ Score:</strong> ${data.iqScore}</p>
+                <p><strong>Height:</strong> ${data.height}</p>
+            </div>
+            <div class='score'>
+                <h3>Ranking: ${data.ranking}</h3>
+                <h3>Score Points: ${data.scorePoints}</h3>
+            </div>
+        </div>
+    `;
+    $('#scoreCard').html(scoreCardHtml);
+}
 
 
 
-
-
+// preprocess form data for submission
 function getFormData() {
     let formData = {};
     for (let i = 0; i <= 2; i++) {
@@ -160,8 +188,12 @@ function submitForm() {
             try {
                 response = JSON.parse(response);
                 if (response.success) {
-                    $('#scoreCard').html(response.scoreCardHtml);
+                                        // Navigate to the last step
+
+
+                    renderScoreCard(response.scoreCardHtml);
                     $('#downloadPdf').attr('href', response.pdfUrl);
+
                     showAlert('Form submitted successfully.', 'success');
                 } else {
                     showAlert('Error submitting data.', 'error');
@@ -177,6 +209,8 @@ function submitForm() {
         }
     });
 }
+
+// 
 
 // Field Validation to ensure all fields are filled out. 
 
@@ -256,3 +290,5 @@ function saveFormData(stepIndex) {
     }
     localStorage.setItem('formDataStep' + stepIndex, JSON.stringify(formData));
 }
+
+
