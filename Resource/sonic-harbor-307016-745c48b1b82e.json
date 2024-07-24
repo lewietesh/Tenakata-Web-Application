@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sonic-harbor-307016",
+  "private_key_id": "745c48b1b82eb2e2655e56204b4993cda5f90170",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC3F/QtMIEEok8Y\n73NtIw2TpP3ive9S7avJyVyfVnwetW6QMqm04KlB4WbnNHf5NRXlIlvvTSg4NtZB\nFTIr3DMlWN7FYjax8sgdw/ogUJMRTqiDvcTBsDCFxCl1LWSpEbWK7qVJxhm2HvbA\nM/l/bB3FINlgPE28wdKX5cC2ud/VlEnnspEeQt02gKCaqIMrZxaW7DLkavZm8mMb\n3h14PEj17OJeE4xsSxx2RWJaLPe+JJNC8PK/eHSE/eTSImBo0lfZ1RNQ2uR7tSTI\nHTxEYf7/TE6K+0wRQ4NnbgB9XLG+Wdq+C2RTm534OIhk3jNSCWJ9W4jaxhSITuNF\nZxr0sHYHAgMBAAECggEACGubmTBv3oywYo8wmcZQ64dc/b6KcR/pFKCkF9fcYXUq\nnosV7vGeFx+Moflxww5D8YPBAqJjxSIQfHHDGu1HlOIfbKh1p31o4qWOrUnHWbZq\nXZSupdG6iYxZ87+gr33XAYq0I05vBEcsRe6d/NQ2EkjOdnSPhqzLSJ0SXdTyjFnv\njndAbwa50V08auijrKYgio6BnwIQK3xlfbwn1Cy0YBIY9WMbwy6YrV/cB3IRAaIc\nJ6dPqdhNgOMIGZmH2BtgKjgzVd07UDsBpzh7TWmJYS9ZO/olx3PuhUebMQdfclG8\nKJUy5pgqxc3evfsLfG8ZaErWKI+t2Z96j4aRrv2bcQKBgQDnwudtBsvwDYKc4poQ\ncEQhDj/D+LCzd1JFkdue0uUlcLGszh2v+VJUm6XS6lIj7+FhW/R0aNJzUQ+JW4OA\nSaTf662XnoQXZFExawnh1BL4ODWCZpx9lV2EmAYT4/qyHu0e9s3gcMFKcddVIDf2\nDjfGDyrvx6aUMwREOhgIhCU+WwKBgQDKPgk9Ch2rwEKpgO1xbrXMiUObIRhFhb7z\nDziNOhrJa+FCLUIJcOcgMN+nRz8vOTAv4kZyWV6LChi978WnaiiE4AYOStZyQSb5\nzKvbCtKci5JCmfnAlpfbCKSHeGEb2RTePFaHz5D+lySCRa/MLFOT/Qh4K5lEFlNE\n7PmxTyOOxQKBgQDLyCOnSPee7rIu8kyXMa+mBRpqXUw5sSxFAbhDUZqsrgd8M4wF\nBEuxG17WMrTg5nadHba3eMe7H8Zyd2YMMjTnsxnjHD13N/zwX/bDe67mVL4wF7t3\n7RLamLWXXbk8T1ceB9MEiwBaTfkR3491KhE+dG3DgiBlZOpWd2JUcqUwywKBgAPw\nCUYC+GjrqWCbfgQDX87HrWVL06km3XzmAvfc9cCONSiQsQR2Ckn6KaCcJoLI3kNQ\naIa5brnOTIUGMhb8XiWYJwYINvyqgBPFBGOTZl5d6U8aqF4zkGlXVby9f0aHh3x8\nOEMUq4IJd1CCAtY61rW+63dLggRtWtmws3vcSpjxAoGAHdD/fwV+nViSmT4zRp6J\no01CdPaHBI+4GiW8zm00GkGmvH5BxP0YaOo3m97S0ZSzN9bkuvBXIgBZcXcFdejQ\n2+s8HEU7E5b7P5699bEDp09eoWPKUORNiE04R0S8pELXk3g9VBeFfkEUXyohc2mL\nUNvDtj8yUdGAoStE4FZjkaE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "tenakataadmission@sonic-harbor-307016.iam.gserviceaccount.com",
+  "client_id": "110545583680651027053",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tenakataadmission%40sonic-harbor-307016.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

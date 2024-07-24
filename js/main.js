@@ -126,6 +126,13 @@ function getFormData() {
             formData = { ...formData, ...stepData };
         }
     }
+
+        // Ensure gpsLocation is added to the form data
+        if (localStorage.getItem('gpsLocation')) {
+            formData.gpsLocation = localStorage.getItem('gpsLocation');
+        }
+
+        
     return formData;
 }
 

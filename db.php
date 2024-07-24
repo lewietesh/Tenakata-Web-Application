@@ -23,19 +23,27 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+        // Ensure gpsLocation is set
+        // if (!isset($_POST['gpsLocation'])) {
+        //     echo json_encode(['success' => false, 'message' => 'GPS Location is missing.']);
+        //     exit;
+        // }
+
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['photo']['tmp_name'];
         $fileName = $_FILES['photo']['name'];
-        $filePath = __DIR__ . '/resources/' . $fileName;
-
+        $filePath = __DIR__ . '/Resource/' . $fileName;
+        
         // Move the uploaded file to the resources directory
         if (move_uploaded_file($fileTmpPath, $filePath)) {
             try {
                 $bucketName = 'tenakata_admission_candidates';
-                $result = uploadFileToGCS($bucketName, $filePath, $fileName);
+                $result = upload_object($bucketName, $fileName, $filePath);
                 
                 if ($result) {
-                    $photoUrl = $result['mediaLink'];
+                    $photoUrl = sprintf('https://storage.googleapis.com/%s/%s', $bucketName, $fileName);
 
                     // Collect form data
                     $formData = [
@@ -49,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'Country' => $_POST['country'],
                         'IQScore' => $_POST['iq'],
                         'Height' => $_POST['height'],
-                        'PhotoURL' => $photoUrl,
+                        'PhotoURL' => $fileName,
                         'Ranking' => 0, // Default value
                         'ScorePoints' => 0 // Default value
                     ];
@@ -80,50 +88,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
 
-function uploadFileToGCS($bucketName, $filePath, $fileName) {
-    // Create a Cloud Storage client
+/**
+ * Upload a file.
+ *
+ * @param string $bucketName The name of your Cloud Storage bucket.
+ * @param string $objectName The name of your Cloud Storage object.
+ * @param string $source The path to the file to upload.
+ * @return bool true if upload was successful, false otherwise
+ */
+function upload_object(string $bucketName, string $objectName, string $source): bool
+{
     $storage = new StorageClient([
-        'keyFilePath' => __DIR__ . '/Resource/sonic-harbor-307016-ba7a47ea0912'
+        'keyFilePath' => __DIR__ .'/Resource/sonic-harbor-307016-745c48b1b82e.json',
+    ]);
+    
+    if (!$file = fopen($source, 'r')) {
+        throw new \InvalidArgumentException('Unable to open file for reading');
+    }
+    
+    $bucket = $storage->bucket($bucketName);
+    $object = $bucket->upload($file, [
+        'name' => $objectName,
+        // 'predefinedAcl' => 'publicRead'
     ]);
 
-
-
-    // Upload the file
-    // Authenticate using the service account key
-    $client = new Client();
-    $credentials = ApplicationDefaultCredentials::getCredentials(
-        'https://www.googleapis.com/auth/cloud-platform'
-    );
-
-    // Create a signed URL for uploading the file
-    $url = "https://storage.googleapis.com/upload/storage/v1/b/{$bucketName}/o?uploadType=media&name={$fileName}";
     
-    // Open the file
-    $fileData = file_get_contents($filePath);
-
-    try {
-        // Send the file data to the signed URL
-        $response = $client->post($url, [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $credentials->fetchAuthToken()['access_token'],
-                'Content-Type' => mime_content_type($filePath),
-                'Content-Length' => strlen($fileData)
-            ],
-            'body' => $fileData
-        ]);
-
-        if ($response->getStatusCode() === 200) {
-            // Parse the response
-            $responseData = json_decode($response->getBody(), true);
-            return $responseData;
-        } else {
-            throw new Exception('Failed to upload file to Google Cloud Storage');
-        }
-    } catch (Exception $e) {
-        error_log('File upload error: ' . $e->getMessage());
-        return false;
-    }
-
+    // printf('Uploaded %s to gs://%s/%s' . PHP_EOL, basename($source), $bucketName, $objectName);
+    return true;
 }
 
 function debug($message) {
