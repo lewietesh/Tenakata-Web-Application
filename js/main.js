@@ -188,13 +188,15 @@ function submitForm() {
             try {
                 response = JSON.parse(response);
                 if (response.success) {
-                                        // Navigate to the last step
-
-
-                    renderScoreCard(response.scoreCardHtml);
-                    $('#downloadPdf').attr('href', response.pdfUrl);
-
                     showAlert('Form submitted successfully.', 'success');
+
+                    // Store the response data in local storage
+                    localStorage.setItem('scoreCardData', JSON.stringify(response));
+
+                    // Redirect to results.html
+                    window.location.href = 'results.html';
+
+
                 } else {
                     showAlert('Error submitting data.', 'error');
                 }

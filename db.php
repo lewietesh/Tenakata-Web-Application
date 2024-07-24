@@ -377,7 +377,7 @@ function generatePdf($scoreCardHtml, $candidates) {
 
 
 
-function updateCandidateRanking($candidateId,  $score) {
+function updateCandidateRanking($candidateId, $score) {
     $servername = DB_HOST;
     $username = DB_USERNAME;
     $password = DB_PASSWORD;
@@ -392,16 +392,39 @@ function updateCandidateRanking($candidateId,  $score) {
         return false;
     }
 
+    // Update the score for the specific candidate
     $stmt = $conn->prepare("UPDATE candidates SET ScorePoints = ? WHERE id = ?");
     $stmt->bind_param("ii", $score, $candidateId);
 
-    if ($stmt->execute()) {
+    if (!$stmt->execute()) {
+        debug("Error: " . $stmt->error);
         $stmt->close();
+        $conn->close();
+        return false;
+    }
+    $stmt->close();
+
+    // Fetch all candidates and their scores
+    $result = $conn->query("SELECT id, ScorePoints FROM candidates ORDER BY ScorePoints DESC");
+    if ($result->num_rows > 0) {
+        $candidates = [];
+        while ($row = $result->fetch_assoc()) {
+            $candidates[] = $row;
+        }
+
+        // Assign rankings based on scores
+        foreach ($candidates as $index => $candidate) {
+            $ranking = $index + 1;
+            $stmt = $conn->prepare("UPDATE candidates SET Ranking = ? WHERE id = ?");
+            $stmt->bind_param("ii", $ranking, $candidate['id']);
+            $stmt->execute();
+            $stmt->close();
+        }
+
         $conn->close();
         return true;
     } else {
-        debug("Error: " . $stmt->error);
-        $stmt->close();
+        debug("No candidates found.");
         $conn->close();
         return false;
     }
